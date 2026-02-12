@@ -1,22 +1,25 @@
+import os
 import requests
 import json
 import time
-API_KEY = None
-BASE_URL ="https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent"
 
-def configure_gemini(api_key: str):
+API_KEY = None
+BASE_URL = "https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash-lite:generateContent"
+
+
+# ==========================================
+# Configure Gemini (Reads from Streamlit Secrets)
+# ==========================================
+def configure_gemini():
     global API_KEY
-    if api_key and api_key.strip():
-        API_KEY = api_key.strip()
-    else:
-        API_KEY = None
+    API_KEY = os.getenv("GEMINI_API_KEY")
 
 
 # ==========================================
 # Internal helper function (Endpoint call)
 # ==========================================
 def _call_gemini(prompt: str) -> str:
-    if API_KEY is None:
+    if not API_KEY:
         return None
 
     url = f"{BASE_URL}?key={API_KEY}"
@@ -56,7 +59,6 @@ def _call_gemini(prompt: str) -> str:
 
         result = response.json()
 
-        # Save response time in session state
         import streamlit as st
         st.session_state.api_response_time = response_time
 
@@ -89,7 +91,6 @@ Keep it concise and clinical.
     if response:
         return response.strip()
 
-    # Safe fallback
     return (
         "1. When did your symptoms start?\n"
         "2. Are they worsening or improving?\n"

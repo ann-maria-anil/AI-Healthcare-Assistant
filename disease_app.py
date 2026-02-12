@@ -137,10 +137,12 @@ df, tfidf, tfidf_matrix = load_all()
 with st.sidebar:
     st.header("🔐 Gemini API Configuration")
 
-    api_key = st.text_input("API Key", type="password")
-    configure_gemini(api_key)
+    configure_gemini()
 
-    st.markdown("---")
+    if not st.secrets.get("GEMINI_API_KEY", None):
+        st.error("Gemini API key not configured in Secrets.")
+    else:
+        st.success("Gemini API key loaded securely.")
 
     st.subheader("🧠 System Architecture")
     st.info("""
@@ -153,24 +155,7 @@ with st.sidebar:
 Model Used: gemini-2.5-flash
 """)
 
-    st.markdown("---")
-
-    st.subheader("📡 API Endpoint")
-    st.code(
-        "POST https://generativelanguage.googleapis.com/v1/models/gemini-2.5-flash:generateContent"
-    )
-
-    st.caption("API Version: v1")
-
-    st.markdown("---")
-
-    if st.button("🔍 Verify Available Models"):
-        if api_key:
-            url = f"https://generativelanguage.googleapis.com/v1/models?key={api_key}"
-            response = requests.get(url)
-            st.json(response.json())
-        else:
-            st.warning("Enter API key first.")
+    
 
 
 # =================================================
