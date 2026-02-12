@@ -1,0 +1,10 @@
+streamlit
+pandas
+scikit-learn
+google-genai
+openpyxl
+streamlit-audiorec
+speechrecognition
+pydub
+sounddevice
+wavio
