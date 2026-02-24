@@ -98,9 +98,7 @@ AI-Healthcare-Assistant/
 ---
 
 ### Live Deployment  
-
-🔗 Add your Streamlit deployment link here  
-Example: https://ai-healthcare-assistant-annmaria.streamlit.app/
+https://ai-healthcare-assistant-annmaria.streamlit.app/
 
 ---
 
